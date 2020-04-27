@@ -1,0 +1,28 @@
+apiVersion: tekton.dev/v1alpha1
+kind: Task
+metadata:
+  name: build-bar
+spec:
+resources:
+  inputs:
+      - name: source-code
+        type: git
+      - name: bar-creation-script
+        type: git
+   outputs:
+      - name: bar-file
+params:
+      - name: FRS-FOLDER
+        description: FRS App folder.
+        default: APPLICATION
+      - name: BAR
+        description: The image on which builds will run
+        default: BARFILE
+steps:
+    - name: build-bar
+      image: bash
+      workingDir: /workspace/
+      command: ["bash"]
+      args:
+        - /workspace/bar-creation-script/create-bar.sh
+      
